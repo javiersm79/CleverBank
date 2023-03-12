@@ -1,5 +1,7 @@
 package port
 
+import "cleverbank/internal/core/domain/account"
+
 type AccountMovementPort interface {
-	Deposit(accountId string) (string, error)
+	Deposit(movementRequest account.AccountMovementRequest) (account.AccountMovementResponse, error)
 }

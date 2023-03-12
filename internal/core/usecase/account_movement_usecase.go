@@ -1,5 +1,7 @@
 package usecase
 
+import "cleverbank/internal/core/domain/account"
+
 type AccountMovementUseCase interface {
-	Handle(movement string) (string, error)
+	Handle(movementRequest account.AccountMovementRequest) (account.AccountMovementResponse, error)
 }

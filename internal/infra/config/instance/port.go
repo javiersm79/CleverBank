@@ -31,12 +31,14 @@ func GetDatabaseConextion() *gorm.DB {
 	return connection
 }
 
+var connectionDB = GetDatabaseConextion()
+
 func GetAccountMovementPort() port.AccountMovementPort {
-	return AccountMovementRepository{}
+	return persistence.AccountMovementRepository{connectionDB}
 }
 
 func GetAccountInfoPort() port.AccountInfoPort {
-	return persistence.AccountInfoRepository{GetDatabaseConextion()}
+	return persistence.AccountInfoRepository{connectionDB}
 }
 
 func InitialMigration(connection *gorm.DB) {
