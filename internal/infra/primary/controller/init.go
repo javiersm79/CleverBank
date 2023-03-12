@@ -8,6 +8,9 @@ import (
 var (
 	instanceAccountMovementController *AccountMovementController
 	onceAccountMovementController     sync.Once
+
+	instanceAccountInfoController *AccountInfoController
+	onceAccountInfoController     sync.Once
 )
 
 func GetAccountMovementController(u usecase.AccountMovementUseCase) *AccountMovementController {
@@ -15,4 +18,11 @@ func GetAccountMovementController(u usecase.AccountMovementUseCase) *AccountMove
 		instanceAccountMovementController = &AccountMovementController{u}
 	})
 	return instanceAccountMovementController
+}
+
+func GetAccountInfoController(u usecase.AccountInfoUseCase) *AccountInfoController {
+	onceAccountInfoController.Do(func() {
+		instanceAccountInfoController = &AccountInfoController{u}
+	})
+	return instanceAccountInfoController
 }
