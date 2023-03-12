@@ -2,6 +2,8 @@ package instance
 
 import (
 	"cleverbank/internal/core/port"
+	"cleverbank/internal/infra/secondary/persistence"
+	"cleverbank/internal/infra/secondary/persistence/dto"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -25,6 +27,7 @@ func GetDatabaseConextion() *gorm.DB {
 		log.Fatal("Database connected")
 	}
 	fmt.Println("Database connection successful.")
+	InitialMigration(connection)
 	return connection
 }
 
@@ -33,5 +36,11 @@ func GetAccountMovementPort() port.AccountMovementPort {
 }
 
 func GetAccountInfoPort() port.AccountInfoPort {
-	return AccountInfotRepository{GetDatabaseConextion()}
+	return persistence.AccountInfoRepository{GetDatabaseConextion()}
+}
+
+func InitialMigration(connection *gorm.DB) {
+	connection.AutoMigrate(dto.Client{})
+	connection.AutoMigrate(dto.User{})
+	connection.AutoMigrate(dto.Account{})
 }
