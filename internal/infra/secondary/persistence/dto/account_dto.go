@@ -5,8 +5,7 @@ import "github.com/jinzhu/gorm"
 type Account struct {
 	gorm.Model
 	ClientId int64
-	number   int64
+	Number   string `gorm:"unique"`
 	Type     string
-	balance  float64
-	//Email    string `gorm:"unique"`
+	Balance  int64
 }

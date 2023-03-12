@@ -1,7 +1,10 @@
 package persistence
 
 import (
+	Account "cleverbank/internal/core/domain/account"
+	"cleverbank/internal/infra/secondary/mapper"
 	"cleverbank/internal/infra/secondary/persistence/dto"
+	"fmt"
 	"github.com/jinzhu/gorm"
 )
 
@@ -9,14 +12,13 @@ type AccountInfoRepository struct {
 	Dbconex *gorm.DB
 }
 
-func (air AccountInfoRepository) CreateAccount(account string) (string, error) {
-	var dbuser dto.User
-	air.Dbconex.Where("email = ?", "user@test.com").First(&dbuser)
-	return dbuser.Password, nil
-}
+func (air AccountInfoRepository) GetBalance(accountNumber string) (Account.AccountDetails, error) {
+	var dbAccount dto.Account
 
-func (air AccountInfoRepository) GetBalance(accountNumber string) (string, error) {
-	var dbuser dto.User
-	air.Dbconex.Where("email = ?", "user@test.com").First(&dbuser)
-	return dbuser.Password, nil
+	if err := air.Dbconex.Where("number = ?", accountNumber).First(&dbAccount).Error; err != nil {
+		return Account.AccountDetails{}, fmt.Errorf("Account not found: %s", accountNumber)
+	}
+
+	acountDetails := mapper.MapAccountInfoDtoToDomain(dbAccount)
+	return acountDetails, nil
 }

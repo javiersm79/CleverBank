@@ -9,7 +9,7 @@ func GetAccountMovementUseCase() usecase.AccountMovementUseCase {
 	return implementation.GetAccountMovementService(GetAccountMovementPort())
 }
 
-func GetAccountInfoUseCase() usecase.AccountMovementUseCase {
+func GetAccountInfoUseCase() usecase.AccountInfoUseCase {
 	return implementation.GetAccountInfoService(GetAccountInfoPort())
 }
 
