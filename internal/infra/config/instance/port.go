@@ -45,6 +45,10 @@ func GetAccountCreationPort() port.AccountCreationPort {
 	return persistence.AccountCreationRepository{connectionDB}
 }
 
+func GetAuthLoginPort() port.AuthLoginPort {
+	return persistence.AuthLoginRepository{connectionDB}
+}
+
 func InitialMigration(connection *gorm.DB) {
 	connection.AutoMigrate(dto.Client{})
 	connection.AutoMigrate(dto.User{})

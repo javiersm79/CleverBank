@@ -19,10 +19,16 @@ func AccountCreationControllerInstance() *controller.AccountCreationController {
 	return controller.GetAccountCreationController(GetAccountCreationUseCase())
 }
 
+func AuthLoginControllerInstance() *controller.AuthLoginController {
+
+	return controller.GetAuthLoginController(GetLoginUseCase())
+}
+
 func GetControllerPrimaryProcessInstance() lightms.PrimaryProcess {
 	return controller.GetControllerInstance([]controller.ControllerRunnable{
 		AccountMovementControllerInstance(),
 		AccountInfoControllerInstance(),
 		AccountCreationControllerInstance(),
+		AuthLoginControllerInstance(),
 	})
 }

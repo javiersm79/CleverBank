@@ -14,6 +14,9 @@ var (
 
 	instanceAccountCreationService *AccountCreationService
 	onceAccountCreationService     sync.Once
+
+	instanceAuthLoginService *AuthLoginService
+	onceAuthLoginService     sync.Once
 )
 
 func GetAccountMovementService(am port.AccountMovementPort) *AccountMovementService {
@@ -35,4 +38,11 @@ func GetAccountCreationService(ai port.AccountCreationPort) *AccountCreationServ
 		instanceAccountCreationService = &AccountCreationService{ai}
 	})
 	return instanceAccountCreationService
+}
+
+func GetAuthLoginService(ai port.AuthLoginPort) *AuthLoginService {
+	onceAuthLoginService.Do(func() {
+		instanceAuthLoginService = &AuthLoginService{ai}
+	})
+	return instanceAuthLoginService
 }

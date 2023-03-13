@@ -16,3 +16,7 @@ func GetAccountInfoUseCase() usecase.AccountInfoUseCase {
 func GetAccountCreationUseCase() usecase.AccountCreationUseCase {
 	return implementation.GetAccountCreationService(GetAccountCreationPort())
 }
+
+func GetLoginUseCase() usecase.LoginUseCase {
+	return implementation.GetAuthLoginService(GetAuthLoginPort())
+}

@@ -20,6 +20,5 @@ type ApplicationProperties struct {
 }
 
 type Application struct {
-	User     string `yaml:"user"`
-	Password string `yaml:"password"`
+	SecretKeyJWT string `yaml:"secret-key-jwt"`
 }
