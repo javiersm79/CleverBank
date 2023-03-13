@@ -1,0 +1,10 @@
+application:
+  secret-key-jwt: '${JWT_SECRET}'
+
+  database:
+    host: '${DB_HOST}'
+    port: '${DB_PORT}'
+    db-user: '${DB_USER}'
+    db-password: '${DB_PASS}'
+    db-name: '${DB_NAME}'
+    #db-ssl-mode: '${DB_SSL_MODE}' # disable,require,verify-ca,verify-full
