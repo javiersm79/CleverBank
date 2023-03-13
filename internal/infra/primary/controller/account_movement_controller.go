@@ -40,4 +40,62 @@ func (e *AccountMovementController) RunController(r *gin.Engine) {
 			gc.AbortWithStatusJSON(http.StatusNotFound, gin.H{"status": "Error", "message": err.Error()})
 		}
 	})
+
+	r.POST("/v1/withdrawal", func(gc *gin.Context) {
+		var req account.AccountMovementRequest
+		req.Type = "withdrawal"
+		gc.BindJSON(&req)
+
+		if req.SourceAccountNumber == "" {
+			fmt.Errorf("Error in AccountInfoController /v1/withdrawal - missing account number")
+			gc.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"status": "Error", "message": "missing account number"})
+			return
+		}
+
+		if req.Amount <= 0 {
+			fmt.Errorf("Error in AccountInfoController /v1/withdrawal - Amount must be mayor than 0")
+			gc.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"status": "Error", "message": "Amount must be mayor than 0"})
+			return
+		}
+
+		response, err := e.accountMovementUseCase.Handle(req)
+
+		if err == nil {
+			gc.JSON(http.StatusOK, response)
+		} else {
+			gc.AbortWithStatusJSON(http.StatusNotFound, gin.H{"status": "Error", "message": err.Error()})
+		}
+	})
+
+	r.POST("/v1/transfer", func(gc *gin.Context) {
+		var req account.AccountMovementRequest
+		req.Type = "transfer"
+		gc.BindJSON(&req)
+
+		if req.SourceAccountNumber == "" {
+			fmt.Errorf("Error in AccountInfoController /v1/transfer - missing destiny account number")
+			gc.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"status": "Error", "message": "missing destiny account number"})
+			return
+		}
+
+		if req.DestinyAccountNumber == "" {
+			fmt.Errorf("Error in AccountInfoController /v1/transfer - missing destiny account number")
+			gc.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"status": "Error", "message": "missing destiny account number"})
+			return
+		}
+
+		if req.Amount <= 0 {
+			fmt.Errorf("Error in AccountInfoController /v1/transfer - Amount must be mayor than 0")
+			gc.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"status": "Error", "message": "Amount must be mayor than 0"})
+			return
+		}
+
+		response, err := e.accountMovementUseCase.Handle(req)
+
+		if err == nil {
+			gc.JSON(http.StatusOK, response)
+		} else {
+			gc.AbortWithStatusJSON(http.StatusNotFound, gin.H{"status": "Error", "message": err.Error()})
+		}
+	})
 }
