@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"cleverbank/internal/infra/primary/middleware"
 	"fmt"
 	"net/http"
 
@@ -15,6 +16,14 @@ type AccountInfoController struct {
 func (e *AccountInfoController) RunController(r *gin.Engine) {
 
 	r.GET("/v1/balance", func(gc *gin.Context) {
+
+		authorized, err := middleware.IsAuthorized(gc.GetHeader("Authorization"))
+
+		if !authorized {
+			gc.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"status": "Error", "message": err.Error()})
+			return
+		}
+
 		queryParams := gc.Request.URL.Query()
 
 		if queryParams.Get("account") == "" {

@@ -2,6 +2,7 @@ package controller
 
 import (
 	"cleverbank/internal/core/domain/account"
+	"cleverbank/internal/infra/primary/middleware"
 	"fmt"
 	"net/http"
 
@@ -16,6 +17,12 @@ type AccountMovementController struct {
 func (e *AccountMovementController) RunController(r *gin.Engine) {
 
 	r.POST("/v1/deposit", func(gc *gin.Context) {
+		authorized, err := middleware.IsAuthorized(gc.GetHeader("Authorization"))
+
+		if !authorized {
+			gc.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"status": "Error", "message": err.Error()})
+			return
+		}
 		var req account.AccountMovementRequest
 		req.Type = "deposit"
 		gc.BindJSON(&req)
@@ -42,6 +49,13 @@ func (e *AccountMovementController) RunController(r *gin.Engine) {
 	})
 
 	r.POST("/v1/withdrawal", func(gc *gin.Context) {
+		authorized, err := middleware.IsAuthorized(gc.GetHeader("Authorization"))
+
+		if !authorized {
+			gc.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"status": "Error", "message": err.Error()})
+			return
+		}
+
 		var req account.AccountMovementRequest
 		req.Type = "withdrawal"
 		gc.BindJSON(&req)
@@ -68,6 +82,13 @@ func (e *AccountMovementController) RunController(r *gin.Engine) {
 	})
 
 	r.POST("/v1/transfer", func(gc *gin.Context) {
+		authorized, err := middleware.IsAuthorized(gc.GetHeader("Authorization"))
+
+		if !authorized {
+			gc.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"status": "Error", "message": err.Error()})
+			return
+		}
+
 		var req account.AccountMovementRequest
 		req.Type = "transfer"
 		gc.BindJSON(&req)
