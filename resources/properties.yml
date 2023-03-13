@@ -1,10 +1,10 @@
 application:
-  secret-key-jwt: 
+  secret-key-jwt: '${JWT_SECRET}'
 
   database:
-    host: 127.0.0.1
-    port: 5432
-    db-user: postgres
-    db-password: postgres
-    db-name: cleverbank
+    host: '${DB_HOST}'
+    port: '${DB_PORT}'
+    db-user: '${DB_USER}'
+    db-password: '${DB_PASS}'
+    db-name: '${DB_NAME}'
     #db-ssl-mode: '${DB_SSL_MODE}' # disable,require,verify-ca,verify-full
