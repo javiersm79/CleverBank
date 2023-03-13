@@ -39,6 +39,10 @@ func (air AccountMovementRepository) Withdrawal(request Account.AccountMovementR
 		return Account.AccountMovementResponse{}, fmt.Errorf("Account not found: %s", request.SourceAccountNumber)
 	}
 
+	if dbAccount.Balance < request.Amount {
+		return Account.AccountMovementResponse{}, fmt.Errorf("Account have insuficient founds")
+	}
+
 	air.Dbconex.Model(&dto.Account{}).Where("number = ?", request.SourceAccountNumber).Update("balance", dbAccount.Balance-request.Amount)
 	dbMovementAccount := GenerateMovement(request)
 	result := air.Dbconex.Create(&dbMovementAccount)

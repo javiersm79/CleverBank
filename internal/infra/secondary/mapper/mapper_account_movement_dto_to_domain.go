@@ -28,6 +28,11 @@ func GenerateDescription(movementAccount dto.MovementAccount) string {
 	switch movementAccount.Action {
 	case "deposit":
 		descriptionInfo = fmt.Sprintf("Deposit - Account number %s by an amount of %d", movementAccount.DestinyAccountNumber, movementAccount.Amount)
+	case "withdrawal":
+		descriptionInfo = fmt.Sprintf("Withdrawal - Account number %s by an amount of %d", movementAccount.SourceAccountNumber, movementAccount.Amount)
+	case "transfer":
+		descriptionInfo = fmt.Sprintf("Transfer - From Account number %s To Account number %s by an amount of %d", movementAccount.SourceAccountNumber, movementAccount.DestinyAccountNumber, movementAccount.Amount)
+
 	default:
 		descriptionInfo = "Operation not found"
 	}
