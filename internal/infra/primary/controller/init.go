@@ -11,6 +11,9 @@ var (
 
 	instanceAccountInfoController *AccountInfoController
 	onceAccountInfoController     sync.Once
+
+	instanceAccountCreationController *AccountCreationController
+	onceAccountCreationController     sync.Once
 )
 
 func GetAccountMovementController(u usecase.AccountMovementUseCase) *AccountMovementController {
@@ -25,4 +28,11 @@ func GetAccountInfoController(u usecase.AccountInfoUseCase) *AccountInfoControll
 		instanceAccountInfoController = &AccountInfoController{u}
 	})
 	return instanceAccountInfoController
+}
+
+func GetAccountCreationController(u usecase.AccountCreationUseCase) *AccountCreationController {
+	onceAccountCreationController.Do(func() {
+		instanceAccountCreationController = &AccountCreationController{u}
+	})
+	return instanceAccountCreationController
 }

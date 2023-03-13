@@ -13,10 +13,6 @@ func GetAccountInfoUseCase() usecase.AccountInfoUseCase {
 	return implementation.GetAccountInfoService(GetAccountInfoPort())
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-type AccountMovementRepository struct {
-}
-
-func (amr AccountMovementRepository) Deposit(accountId string) (string, error) {
-	return "movementID-Generated", nil
+func GetAccountCreationUseCase() usecase.AccountCreationUseCase {
+	return implementation.GetAccountCreationService(GetAccountCreationPort())
 }

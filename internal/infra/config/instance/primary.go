@@ -14,9 +14,15 @@ func AccountInfoControllerInstance() *controller.AccountInfoController {
 	return controller.GetAccountInfoController(GetAccountInfoUseCase())
 }
 
+func AccountCreationControllerInstance() *controller.AccountCreationController {
+
+	return controller.GetAccountCreationController(GetAccountCreationUseCase())
+}
+
 func GetControllerPrimaryProcessInstance() lightms.PrimaryProcess {
 	return controller.GetControllerInstance([]controller.ControllerRunnable{
 		AccountMovementControllerInstance(),
 		AccountInfoControllerInstance(),
+		AccountCreationControllerInstance(),
 	})
 }
