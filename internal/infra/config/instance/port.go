@@ -45,4 +45,5 @@ func InitialMigration(connection *gorm.DB) {
 	connection.AutoMigrate(dto.Client{})
 	connection.AutoMigrate(dto.User{})
 	connection.AutoMigrate(dto.Account{})
+	connection.AutoMigrate(dto.MovementAccount{})
 }

@@ -4,31 +4,30 @@ import (
 	"cleverbank/internal/core/domain/account"
 	"cleverbank/internal/infra/secondary/persistence/dto"
 	"fmt"
-	"github.com/google/uuid"
 	"time"
 )
 
-func MapAccountMovementDtoToDomain(accountDto dto.Account, movementRequest account.AccountMovementRequest) account.AccountMovementResponse {
+func MapAccountMovementDtoToDomain(movementAccount dto.MovementAccount) account.AccountMovementResponse {
 
-	descriptionInfo := GenerateDescription(movementRequest)
+	descriptionInfo := GenerateDescription(movementAccount)
 
 	accountDetails := account.AccountMovementResponse{
-		IdMovement:           uuid.NewString(),
-		Secuence:             int64(accountDto.ID),
+		IdMovement:           movementAccount.MovementId,
+		Secuence:             int64(movementAccount.ID),
 		Date:                 time.Now(),
-		SourceAccountNumber:  movementRequest.SourceAccountNumber,
-		DestinyAccountNumber: movementRequest.DestinyAccountNumber,
+		SourceAccountNumber:  movementAccount.SourceAccountNumber,
+		DestinyAccountNumber: movementAccount.DestinyAccountNumber,
 		Description:          descriptionInfo,
-		Amount:               movementRequest.Amount,
+		Amount:               movementAccount.Amount,
 	}
 	return accountDetails
 }
 
-func GenerateDescription(movementRequest account.AccountMovementRequest) string {
+func GenerateDescription(movementAccount dto.MovementAccount) string {
 	var descriptionInfo string
-	switch movementRequest.Type {
+	switch movementAccount.Action {
 	case "deposit":
-		descriptionInfo = fmt.Sprintf("Deposit - Account number %s by an amount of %d", movementRequest.DestinyAccountNumber, movementRequest.Amount)
+		descriptionInfo = fmt.Sprintf("Deposit - Account number %s by an amount of %d", movementAccount.DestinyAccountNumber, movementAccount.Amount)
 	default:
 		descriptionInfo = "Operation not found"
 	}
