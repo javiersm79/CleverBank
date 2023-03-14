@@ -6,8 +6,7 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
-func IsAuthorized(userToken string) (bool, error) {
-
+var IsAuthorized = func(userToken string) (bool, error) {
 	/*if r.Header["Token"] == nil {
 		var err Error
 		err = SetError(err, "No Token Found")

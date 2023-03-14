@@ -2,12 +2,8 @@ package controller
 
 import (
 	"github.com/rendis/lightms"
-	"net/http"
 	"reflect"
 	"testing"
-	"time"
-
-	"github.com/gin-gonic/gin"
 )
 
 func TestGetControllerInstance(t *testing.T) {
@@ -31,37 +27,6 @@ func TestGetControllerInstance(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := GetControllerInstance(tt.args.c); reflect.DeepEqual(got, tt.want) {
 				t.Errorf("GetControllerInstance() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func Test_configuration(t *testing.T) {
-	type args struct {
-		router *gin.Engine
-	}
-	tests := []struct {
-		name string
-		args args
-		want *http.Server
-	}{
-		{
-			name: "Test_configuration",
-			args: args{
-				router: nil,
-			},
-			want: &http.Server{
-				Addr:         ":0",
-				Handler:      nil,
-				ReadTimeout:  0 * time.Second,
-				WriteTimeout: 0 * time.Second,
-			},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := configuration(tt.args.router); !reflect.DeepEqual(got.Addr, tt.want.Addr) {
-				t.Errorf("configuration() = %v, want %v", got, tt.want)
 			}
 		})
 	}

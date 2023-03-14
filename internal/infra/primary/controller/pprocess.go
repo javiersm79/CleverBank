@@ -31,9 +31,7 @@ func (c *GinController) Start() {
 }
 
 func configuration(router *gin.Engine) *http.Server {
-	/*port := ":" + strconv.Itoa(prop.GetServerPortProperties().Port)
-	ReadTimeout := time.Duration(prop.GetServerPortProperties().ReadTimeout) * time.Second
-	WriteTimeout := time.Duration(prop.GetServerPortProperties().WriteTimeout) * time.Second*/
+
 	port := ":" + strconv.Itoa(3000)
 	ReadTimeout := time.Duration(1000) * time.Second
 	WriteTimeout := time.Duration(1000) * time.Second

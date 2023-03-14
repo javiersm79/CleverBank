@@ -2,10 +2,13 @@ package implementation
 
 import (
 	"cleverbank/internal/core/port"
+	"log"
+	"os"
 	"sync"
 )
 
 var (
+	logger                         = log.New(os.Stdout, "INFO: ", log.Ldate|log.Ltime)
 	instanceAccountMovementService *AccountMovementService
 	onceAccountMovementService     sync.Once
 
